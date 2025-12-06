@@ -17,7 +17,10 @@ const [str_ranges, str_ids] = preParse(Deno.readTextFileSync('./day5.txt'), x=>x
 const ranges = str_ranges.map(x => x.split('-').map(Number)) as [number, number][]
 const ids = str_ids.map(Number)
 
-function part1(ranges:[number,number][], ids:number[]){
+export const exampleParsedInput = [example_ranges, example_ids]
+export const parsedInput = [ranges, ids] as [[number, number][], number[]]
+
+export function part1(ranges:[number,number][], ids:number[]){
     let sum = 0
     for(const id of ids){
         if(ranges.find(([low, high])=> id >= low && id <= high)){
@@ -27,10 +30,8 @@ function part1(ranges:[number,number][], ids:number[]){
     return sum
 }
 
-console.log(part1(example_ranges, example_ids))
-console.log(part1(ranges, ids))
 
-function part2(ranges:[number, number][]){
+export function part2(ranges:[number, number][]){
     ranges.sort(([a,_],[b,__])=> a-b)
     
     let [lastLow, lastHigh] = ranges[0]
@@ -50,4 +51,8 @@ function part2(ranges:[number, number][]){
     return sum + lastHigh - lastLow +  1
 }
 
-console.log(part2(ranges))
+if (import.meta.url === Deno.mainModule) {
+    console.log(part1(example_ranges, example_ids))
+    console.log(part1(ranges, ids))
+    console.log(part2(ranges))
+}

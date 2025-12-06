@@ -1,5 +1,5 @@
 import { preParse } from "./tools.ts";
-const exampleInp = preParse(`..@@.@@@@.
+export const exampleInput = preParse(`..@@.@@@@.
 @@@.@.@.@@
 @@@@@.@.@@
 @.@@@@..@.
@@ -10,7 +10,7 @@ const exampleInp = preParse(`..@@.@@@@.
 .@@@@@@@@.
 @.@.@@@.@.`, x=>x==='@'?1:0, '\n', '')
 
-const inp = preParse(Deno.readTextFileSync('./day4.txt'), x=>x==='@'?1:0, '\n', '')
+export const parsedInput = preParse(Deno.readTextFileSync('./day4.txt'), x=>x==='@'?1:0, '\n', '')
 
 function convolve<T>(matrix:number[][], kernel:number[][], map:(old:number, acc:number) => T){
     const offsetX = Math.floor(kernel[0].length/2)
@@ -51,14 +51,14 @@ function display(inp:number[][], map:(old:number) => string){
     return acc
 }
 
-function part1(inp:number[][]){
+export function part1(inp:number[][]){
     const countBefore = sum(inp)
     const matrix = convolve(inp, [[1,1,1],[1,0,1],[1,1,1]], (old, acc)=>old*acc>3?1:0)
     const countAfter = sum(matrix)
     return countBefore-countAfter
 }
 
-function part2(inp:number[][]){
+export function part2(inp:number[][]){
     let lastCount = -1
     let count = sum(inp)
     let change = lastCount-count
@@ -74,5 +74,8 @@ function part2(inp:number[][]){
     return totalRemoved
 }
 
-console.log(part1(inp))
-console.log(part2(inp))
+if (import.meta.url === Deno.mainModule) {
+    console.log(display(parsedInput, x=>x>3?'#':'.'))
+    console.log(part1(parsedInput))
+    console.log(part2(parsedInput))
+}

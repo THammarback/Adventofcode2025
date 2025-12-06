@@ -1,12 +1,12 @@
 import { preParse, transpose } from "./tools.ts"
-const exampleInputString = `123 328  51 64 
+export const exampleInputString = `123 328  51 64 
  45 64  387 23 
   6 98  215 314
 *   +   *   +  `
 
-const inputString = Deno.readTextFileSync('./day6.txt') 
+export const inputString = Deno.readTextFileSync('./day6.txt') 
 
-function part1(inp: string){
+export function part1(inp: string){
     const parsedInput = preParse(inp, x => x, '\n', ' ')
 
     let sum = 0
@@ -31,7 +31,7 @@ function part1(inp: string){
     return sum
 }
 
-function part2(inp:string){
+export function part2(inp:string){
     const transposedInput = transpose(preParse(inp, x=>x, '\n', ''))
     const operators = ['+', '*'] as const
     function isOperator(x:unknown): x is typeof operators[number]{
@@ -69,10 +69,10 @@ function part2(inp:string){
     return sum+partialSum
 }
 
+if (import.meta.url === Deno.mainModule) {
+    console.log(part1(exampleInputString))
+    console.log(part1(inputString))
 
-console.log(part1(exampleInputString))
-console.log(part1(inputString))
-
-console.log(part2(exampleInputString))
-console.log(part2(inputString))
-
+    console.log(part2(exampleInputString))
+    console.log(part2(inputString))
+}

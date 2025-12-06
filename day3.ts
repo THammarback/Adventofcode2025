@@ -1,7 +1,7 @@
 // const banks = ["987654321111111","811111111111119","234234234234278","818181911112111"].map(x => x.split('').map(Number))
 const banks = Deno.readTextFileSync("./day3.txt").split('\n').map(x => x.split('').map(Number))
 
-function part1(banks:number[][]){
+export function part1(banks:number[][]){
     let sum = 0
     for(const bank of banks){
         let max1 = bank[0]
@@ -19,7 +19,6 @@ function part1(banks:number[][]){
     }
     return sum
 }
-console.log(part1(banks))
 
 function indexOfMax(arr:number[]){
     let max = -Infinity
@@ -33,7 +32,7 @@ function indexOfMax(arr:number[]){
     return index
 }
 
-function part2(banks:number[][], amount:number){
+export function part2(banks:number[][], amount:number){
     let sum = 0
     for(const bank of banks){
         let joltage = ""
@@ -46,5 +45,11 @@ function part2(banks:number[][], amount:number){
     }
     return sum
 }
-console.log(part2(banks, 2))
-console.log(part2(banks, 12))
+
+export const parsedInput = [banks, 12] as [typeof banks, number]
+
+if (import.meta.url === Deno.mainModule) {
+    console.log(part1(banks))
+    console.log(part2(banks, 2))
+    console.log(part2(banks, 12))
+}
