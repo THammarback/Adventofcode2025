@@ -4,6 +4,9 @@ import { part1 as part1Day3, part2 as part2Day3, parsedInput as parsedInputDay3 
 import { part1 as part1Day4, part2 as part2Day4, parsedInput as parsedInputDay4 } from "./day4.ts";
 import { part1 as part1Day5, part2 as part2Day5, parsedInput as parsedInputDay5 } from "./day5.ts";
 import { part1 as part1Day6, part2 as part2Day6, inputString as inputStringDay6 } from "./day6.ts";
+import { part1 as part1Day7, part2 as part2Day7, parsedInput as parsedInputDay7 } from "./day7.ts";
+
+import { solve as part1Day8, solve as part2Day8, parsedInput as parsedInputDay8 } from "./day8.ts";
 
 function log<T extends (...args:any[])=>number >(day: number, part: number, func: T, ...args: Parameters<T>):string{
     const start = performance.now();
@@ -25,4 +28,8 @@ console.log(log(5, 1, part1Day5, ...parsedInputDay5))
 console.log(log(5, 2, part2Day5, parsedInputDay5[0]))
 console.log(log(6, 1, part1Day6, inputStringDay6))
 console.log(log(6, 2, part2Day6, inputStringDay6))
+console.log(log(7, 1, part1Day7, parsedInputDay7))
+console.log(log(7, 2, part2Day7, parsedInputDay7))
+console.log(log(8, 1, part1Day8, parsedInputDay8, 1000))
+console.log(log(8, 2, part2Day8, parsedInputDay8))
 

@@ -156,3 +156,48 @@ export class BinaryPriorityHeap<T> {
         this.heap[index] = element;
     }
 }
+
+
+interface NodeState<T> {
+  node: T;
+  gScore: number; // Cost from start to this node
+  fScore: number; // Estimated total cost (gScore + hScore)
+  parent: T | null;
+}
+
+export function aStar<T>(
+  start: T,
+  isEnd: (node:T)=>boolean,
+  getNeighbours: (a:T) => Array<T>,
+  getCost: (a: T, b: T) => number,
+  heuristic: (a: T, b: T) => number,
+  stateMap: {add:(node:T)=>void, get:(a:T) => NodeState<T>|undefined}
+): T | null {
+  const queue = new BinaryPriorityHeap<T>(heuristic)
+  queue.add(start)
+  stateMap.add(start)
+  while(queue.length){
+    const current = queue.pop()!
+    if(isEnd(current)){
+      return current
+    }
+    for(const neighbour of getNeighbours(current)){
+      const tentativeGScore = current + getCost(current, neighbour);
+      const existingState = stateMap.get(neighbour);
+      if (!existingState || tentativeGScore < existingState.gScore) {
+        const neighborState: NodeState<T> = {
+          node: neighborNode,
+          gScore: tentativeGScore,
+          fScore: tentativeGScore + heuristic(neighborNode, endNode),
+          parent: currentState.node,
+        };
+
+        stateMap.add(neighbour);
+
+        if (!existingState) {
+          queue.add(neighbour);
+        }
+      }
+    }
+  }
+}
